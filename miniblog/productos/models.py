@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 # Create your models here.
 
@@ -18,6 +19,16 @@ class Productos(models.Model):
         null=True,
         blank=True
         )
+    stock = models.IntegerField(default = 0)
+
+    @admin.display(description = 'Rango de Precios')
+    def get_price_range(self):
+        if self.price > 90000:
+            return 'Alto'
+        elif 1600 < self.price < 90000:
+            return 'Medio'
+        else:
+            return 'Bajo' 
 
     def save(self, *args, **kwargs):
         if self.price>0:
@@ -25,4 +36,6 @@ class Productos(models.Model):
         else:
             print('error')
 
+    def __str__(self):
+        return self.name
     
