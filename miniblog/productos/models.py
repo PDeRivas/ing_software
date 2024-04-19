@@ -10,7 +10,7 @@ class Category(models.Model):
     
 class Productos(models.Model):
     name = models.CharField(max_length = 50)
-    description = models.TextField()
+    description = models.TextField(null = True)
     price = models.DecimalField(max_digits = 12,
                                 decimal_places = 2)
     category = models.ForeignKey(
@@ -38,4 +38,3 @@ class Productos(models.Model):
 
     def __str__(self):
         return self.name
-    
