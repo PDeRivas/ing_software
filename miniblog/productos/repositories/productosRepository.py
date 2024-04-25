@@ -8,6 +8,8 @@ from productos.models import (
     Category
 )
 
+#logger = logging.getLogger(__name__)
+
 class ProductosRepository:
     def create(self,
                nombre: str,
@@ -28,21 +30,47 @@ class ProductosRepository:
     def get_all(self) -> List[Productos]:
         return Productos.objects.all()
     
-    def get_by_id(self, producto_id,) -> Optional[Productos]:
+    def filter_by_id(self, producto_id,) -> Optional[Productos]:
         return Productos.objects.filter(id=producto_id).first()
+    
+    def get_by_id(self, producto_id: int,) -> Optional[Productos]:
+        try:
+            product = Productos.object.get(id=producto_id)
+        except:
+            product = None
+        return product
     
     def get_product_on_price_range(
             self,
             min_price = float,
             max_price = float,
         ) -> List[Productos]:
-        return Productos.objects.filter(
-            price_range=(min_price, max_price)
+        productos = Productos.objects.filter(
+            price__range = (min_price, max_price)
         )
+        return productos
     
-    def get_product_on_category(
+    def filter_by_category(
             self,
-            category_id = int,
+            categoria = Category,
     ) -> List[Productos]:
-        category = Category.objects.filter(id=category_id).first()
-        return Productos.objects.filter(category = category)
+        return Productos.objects.filter(category = categoria)
+    
+    def filter_by_category_name(
+            self,
+            categoria = str,
+    ) -> List[Productos]:
+        return Productos.objects.filter(category__name = categoria)
+    
+    def delete(self, producto: Productos):
+        return producto.delete()
+
+    def get_product_gte_stock(self,
+                              cantidad: int
+                              ) -> List[Productos]:
+        return Productos.objects.filter(stock__gte=cantidad)
+    
+    def get_product_lte_stock(self,
+                              cantidad: int
+                              ) -> List[Productos]:
+        return Productos.objects.filter(stock__lte=cantidad)
