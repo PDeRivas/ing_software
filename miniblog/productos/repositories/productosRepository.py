@@ -33,9 +33,9 @@ class ProductosRepository:
     def filter_by_id(self, producto_id,) -> Optional[Productos]:
         return Productos.objects.filter(id=producto_id).first()
     
-    def get_by_id(self, producto_id: int,) -> Optional[Productos]:
+    def get_by_id(self, id: int,) -> Optional[Productos]:
         try:
-            product = Productos.object.get(id=producto_id)
+            product = Productos.objects.get(id=id)
         except:
             product = None
         return product
@@ -62,7 +62,8 @@ class ProductosRepository:
     ) -> List[Productos]:
         return Productos.objects.filter(category__name = categoria)
     
-    def delete(self, producto: Productos):
+    def delete_by_id(self, id:int):
+        producto = self.get_by_id(id=id)
         return producto.delete()
 
     def get_product_gte_stock(self,
