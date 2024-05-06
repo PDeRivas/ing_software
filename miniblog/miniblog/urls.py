@@ -20,8 +20,10 @@ from django.urls import (
     include
 )
 
+from productos.views.index_view import index_view
+
 urlpatterns = [
+    path("", index_view, name='index'),
     path('admin/', admin.site.urls),
-    path("", include("core.urls")),
     path('productos/', include('productos.urls')),
 ]

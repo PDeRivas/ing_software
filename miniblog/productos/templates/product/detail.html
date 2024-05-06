@@ -1,4 +1,4 @@
-{% extends "product/base.html" %}
+{% extends "index/base.html" %}
 {% block content %}
 <div class="container mt-3">
     <h2>Detalles del Producto</h2>
@@ -9,6 +9,7 @@
             <p class="card-text"><strong>Precio:</strong> {{ producto.price }}</p>
             <p class="card-text"><strong>Categoría:</strong> {{ producto.category.name }}</p>
             <p class="card-text"><strong>Stock:</strong> {{ producto.stock }}</p>
+            <a href="{% url 'product_update' producto.id %}" class="btn btn-primary">Editar</a>
             <a href="{% url 'product_list' %}" class="btn btn-secondary">Volver a la lista</a>
         </div>
     </div>

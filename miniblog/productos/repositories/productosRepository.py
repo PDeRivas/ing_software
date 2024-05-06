@@ -14,7 +14,7 @@ class ProductosRepository:
     def create(self,
                nombre: str,
                precio: float,
-               stock: int,
+               cantidad: int,
                categoria: Optional[Category] = None,
                descripcion: Optional[str] = None,
                ) -> Productos.objects:
@@ -22,10 +22,31 @@ class ProductosRepository:
         return Productos.objects.create(
             name = nombre,
             description = descripcion,
-            price = precio,
+            price = float(precio),
             category = categoria,
-            stock = stock,
+            stock = int(cantidad),
         )
+    
+    def update(self,
+               producto: Productos,
+               nombre: str,
+               precio: float,
+               cantidad: int,
+               categoria: Optional[Category] = None,
+               descripcion: Optional[str] = None,
+               ) -> None:
+        if int(cantidad) < 0:
+            raise ValueError('El stock no puede ser menor a 0')
+        if float(precio) < 0 :
+            raise ValueError('El precio no puede ser menor a 0')
+        
+        producto.name = nombre
+        producto.description = descripcion
+        producto.price = float(precio)
+        producto.stock = int(cantidad)
+        producto.category = categoria
+
+        producto.save()
     
     def get_all(self) -> List[Productos]:
         return Productos.objects.all()
@@ -62,9 +83,17 @@ class ProductosRepository:
     ) -> List[Productos]:
         return Productos.objects.filter(category__name = categoria)
     
-    def delete_by_id(self, id:int):
-        producto = self.get_by_id(id=id)
-        return producto.delete()
+    def get_all_categories(self,) -> List[Category]:
+        return Category.objects.all()
+    
+    def get_category_by_id(
+                self,
+                category_id
+        ) -> Category:
+            return Category.objects.get(id=category_id)
+
+    def delete(self, producto: Productos):
+        producto.delete()
 
     def get_product_gte_stock(self,
                               cantidad: int
@@ -75,3 +104,4 @@ class ProductosRepository:
                               cantidad: int
                               ) -> List[Productos]:
         return Productos.objects.filter(stock__lte=cantidad)
+    
