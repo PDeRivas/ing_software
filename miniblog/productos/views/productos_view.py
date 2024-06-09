@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 
 from productos.repositories.productosRepository import ProductosRepository
+from django.contrib.auth.decorators import login_required
 
 repo = ProductosRepository()
 
@@ -15,6 +16,7 @@ def product_list(request):
         }
     )
 
+@login_required(login_url='login')
 def product_create(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -52,11 +54,13 @@ def product_detail(request, id:int):
         {'producto': producto}
     )
 
+@login_required(login_url='login')
 def product_delete(request, id:int):
     producto = repo.get_by_id(id=id)
     repo.delete(producto=producto)
     return redirect(product_list)
 
+@login_required(login_url='login')
 def product_update(request, id:int):
     product = repo.get_by_id(id=id)
     if request.method == "POST":

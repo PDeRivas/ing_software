@@ -62,7 +62,7 @@ class ProductReview(models.Model):
 
     def __str__(self):
         return f'Review by {self.author.username} for {self.product.name}'
-    
+
 
 class PriceHistory(models.Model):
     product = models.ForeignKey(
