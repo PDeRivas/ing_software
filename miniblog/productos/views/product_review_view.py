@@ -32,4 +32,21 @@ class ProductReviewCreate(View):
         rating =  request.POST.get('rating')
         user = request.user
         repo.create(id_producto, user, opinion, rating)
-        return redirect('reivew_list')
+        return redirect('review_list')
+
+class ProductReviewDetail(View):
+    def get(self, request, id):
+        repo = ReviewRepository()
+        review = repo.get_by_id(id=id)
+        return render(
+            request,
+            'product_review/detail.html',
+            {'review': review},
+        )
+
+class ProductReviewDelete(View):
+    def get(self, request, id):
+        repo = ReviewRepository()
+        review = repo.get_by_id(id=id)
+        repo.delete(review=review)
+        return redirect('review_list')

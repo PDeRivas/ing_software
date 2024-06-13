@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.contrib.auth.decorators import login_required
 from productos.views.productos_view import (
     product_list,
     product_create,
@@ -27,6 +27,8 @@ from productos.views.supplier_view import(
 from productos.views.product_review_view import(
     ProductReviewView,
     ProductReviewCreate,
+    ProductReviewDetail,
+    ProductReviewDelete,
 )
 
 urlpatterns = [
@@ -48,7 +50,8 @@ urlpatterns = [
     path(route='supplier/<int:id>/update', view=supplier_update, name='supplier_update'),
     path(route='supplier/<int:id>/detail', view=supplier_details, name='supplier_detail'),
 
-    path(route='reviews/', view=ProductReviewView.as_view(), name='reivew_list'),
-    path(route='reviews/create', view=ProductReviewCreate.as_view(), name='review_create'),
-
-]
+    path(route='reviews/', view=(ProductReviewView.as_view()), name='review_list'),
+    path(route='reviews/create', view=login_required(ProductReviewCreate.as_view(), login_url='login'), name='review_create'),
+    path(route='reviews/<int:id>/detail', view=ProductReviewDetail.as_view(), name='review_detail'),
+    path(route='reviews/<int:id>/delete', view=login_required(ProductReviewDelete.as_view(), login_url='login'), name='review_delete'),
+] 

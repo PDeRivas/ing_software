@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from productos.repositories.categoriasRepository import CategoriasRepository
+from django.contrib.auth.decorators import login_required
 
 repo = CategoriasRepository
 
@@ -14,6 +15,7 @@ def category_list(request):
         },
     )
 
+@login_required(login_url='login')
 def category_create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -28,11 +30,13 @@ def category_create(request):
         'categories/create.html',
     )
 
+@login_required(login_url='login')
 def category_delete(request, id:int):
     categoria = repo.get_by_id(id=id)
     repo.delete(categoria)
     return redirect(category_list)
 
+@login_required(login_url='login')
 def category_update(request, id:int):
     categoria = repo.get_by_id(id=id)
     if request.method == "POST":

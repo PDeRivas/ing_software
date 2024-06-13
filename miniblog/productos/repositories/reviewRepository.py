@@ -16,6 +16,9 @@ class ReviewRepository:
     def get_all(self) -> List[ProductReview]:
         return ProductReview.objects.all()
     
+    def get_by_id(self, id) -> ProductReview:
+        return ProductReview.objects.get(id = id)
+
     def create(self,
                producto_id: int,
                user: User,
@@ -30,3 +33,6 @@ class ReviewRepository:
             rating = rating
         )
         return review
+    
+    def delete(self, review: ProductReview):
+            review.delete()

@@ -18,8 +18,9 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
         if username and password:
-            user = authenticate(username=username, password=password)
-            print(user)
+            user = authenticate(request,
+                                username=username,
+                                password=password)
             if user:
                 login(request, user)
                 return redirect('index')
