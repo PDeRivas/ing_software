@@ -44,6 +44,26 @@ class ProductReviewDetail(View):
             {'review': review},
         )
 
+class ProductReviewUpdate(View):
+    def get(self, request, id):
+        repo = ReviewRepository()
+        review = repo.get_by_id(id=id)
+        return render(
+            request,
+            'product_review/update.html',
+            {'review': review},
+        )
+
+    def post(self, request, id):
+        repo = ReviewRepository()
+        review = repo.get_by_id(id)
+        opinion = request.POST.get('opinion')
+        rating =  request.POST.get('rating')
+        review.text = opinion
+        review.rating = rating
+        review.save()
+        return redirect('review_list')
+
 class ProductReviewDelete(View):
     def get(self, request, id):
         repo = ReviewRepository()
