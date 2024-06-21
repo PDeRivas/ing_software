@@ -32,6 +32,10 @@ from productos.views.product_review_view import(
     ProductReviewDelete,
 )
 
+from productos.views.product_image_view import(
+    ProductImageView,
+)
+
 urlpatterns = [
     path(route='', view=product_list, name='product_list'),
     path(route='create/', view=product_create, name='product_create'),
@@ -56,4 +60,6 @@ urlpatterns = [
     path(route='reviews/<int:id>/detail', view=ProductReviewDetail.as_view(), name='review_detail'),
     path(route='reviews/<int:id>/delete', view=login_required(ProductReviewDelete.as_view(), login_url='login'), name='review_delete'),
     path(route='reviews/<int:id>/update', view=login_required(ProductReviewUpdate.as_view(), login_url='login'), name='review_update'),
+
+    path(route='images', view=ProductImageView.as_view(), name='image_list')
 ] 

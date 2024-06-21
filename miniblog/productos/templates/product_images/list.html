@@ -1,0 +1,17 @@
+{% extends "home/base.html" %}
+{% block content %}
+        {% for image in images %}
+        <div class="card">
+            <div class="card-header">
+                {{ image.product }}
+            </div>
+
+            <div class="card-body text-center">
+                <img src="{{image.image.url}}" class="img-fluid" alt="Imagen">
+            </div>
+            <div class="card-footer">
+                {{ image.description }}
+            </div>
+        </div>
+        {% endfor %}
+{% endblock %}

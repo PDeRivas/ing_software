@@ -1,6 +1,7 @@
 # Create your views here.
 from django.shortcuts import render, redirect
 
+from productos.models import ProductImage
 from productos.repositories.productosRepository import ProductosRepository
 from django.contrib.auth.decorators import login_required
 from productos.forms import ProductForm
@@ -42,10 +43,14 @@ def product_create(request):
 
 def product_detail(request, id:int):
     producto = repo.get_by_id(id=id)
+    imagen = ProductImage.objects.get(product=producto)
     return render(
         request,
         'product/detail.html',
-        {'producto': producto}
+        {
+            'producto': producto,
+            'imagen': imagen,
+            }
     )
 
 @login_required(login_url='login')

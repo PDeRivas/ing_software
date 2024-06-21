@@ -5,6 +5,7 @@ from productos.models import (
     Category,
     Supplier,
     ProductReview,
+    ProductImage,
 )
 
 class ProductForm(forms.ModelForm):
@@ -25,3 +26,12 @@ class ProductForm(forms.ModelForm):
             'category': forms.Select(attrs={'class': 'form-control'}),
             'stock': forms.NumberInput(attrs={'class': 'form-control'}),  
         }
+
+class ProductImageForm(forms.ModelForm):
+    class Meta:
+        model = ProductImage
+        fields = [
+            'product',
+            'image',
+            'description',
+        ]

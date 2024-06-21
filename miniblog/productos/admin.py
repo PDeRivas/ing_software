@@ -6,6 +6,7 @@ from django.utils.html import format_html
 from productos.models import(
     Category,
     Productos,
+    ProductImage,
 )
 
 @admin.register(Category)
@@ -60,3 +61,7 @@ class ProductosAdmin(admin.ModelAdmin):
             
         ),
     ]
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = ['product', 'image', 'description']
