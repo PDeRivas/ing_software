@@ -8,7 +8,10 @@ class ProductReviewView(View):
     def get(self, request):
         repo = ReviewRepository()
         reviews = repo.get_all()
-        
+
+        if request.user.is_authenticated and not request.user.is_staff:
+            reviews = reviews.filter(author=request.user)
+
         return render(
             request,
             'product_review/list.html',
