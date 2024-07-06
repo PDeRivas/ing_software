@@ -82,15 +82,6 @@ class ProductosRepository:
             categoria = str,
     ) -> List[Productos]:
         return Productos.objects.filter(category__name = categoria)
-    
-    def get_all_categories(self,) -> List[Category]:
-        return Category.objects.all()
-    
-    def get_category_by_id(
-                self,
-                category_id
-        ) -> Category:
-            return Category.objects.get(id=category_id)
 
     def delete(self, producto: Productos):
         producto.delete()

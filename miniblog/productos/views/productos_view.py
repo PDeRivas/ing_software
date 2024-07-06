@@ -1,93 +1,124 @@
-# Create your views here.
+from django.views import View
 from django.shortcuts import render, redirect
 
-from productos.models import ProductImage
-from productos.repositories.productosRepository import ProductosRepository
 from django.contrib.auth.decorators import login_required
+from productos.models import ProductImage
 from productos.forms import ProductForm
+from productos.repositories.productosRepository import ProductosRepository
+from productos.repositories.categoriasRepository import CategoriasRepository
 
 repo = ProductosRepository()
 
-def product_list(request):
-    products = repo.get_all()
-    return render(
-        request,
-        'product/list.html',
-        {
-            'productos': products,
-        }
-    )
+class ProductView(View):
+    def get(self, request):
+        repo = ProductosRepository()
+        productos = repo.get_all()
 
-@login_required(login_url='login')
-def product_create(request):
-    if request.method == "POST":
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            producto_nuevo = repo.create(
-                nombre = form.cleaned_data['name'],
-                precio = form.cleaned_data['price'],
-                descripcion = form.cleaned_data['description'],
-                cantidad = form.cleaned_data['stock'],
-                categoria = form.cleaned_data['category'],
-            )
-            return redirect(
-                'product_list',
-                )
-
-    form = ProductForm()
-    return render(
-        request,
-        'product/create.html',
-        {'form': form}
-    )
-
-def product_detail(request, id:int):
-    producto = repo.get_by_id(id=id)
-    imagen = ProductImage.objects.get(product=producto)
-    return render(
-        request,
-        'product/detail.html',
-        {
-            'producto': producto,
-            'imagen': imagen,
-            }
-    )
-
-@login_required(login_url='login')
-def product_delete(request, id:int):
-    producto = repo.get_by_id(id=id)
-    repo.delete(producto=producto)
-    return redirect(product_list)
-
-@login_required(login_url='login')
-def product_update(request, id:int):
-    product = repo.get_by_id(id=id)
-    if request.method == "POST":
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        number = request.POST.get('price')
-        category_id = request.POST.get('category')
-        category = repo.get_category_by_id(category_id=category_id)
-        stock = request.POST.get('stock')
-
-        repo.update(
-            producto = product,
-            nombre = name,
-            precio = number,
-            descripcion = description,
-            categoria = category,
-            cantidad = stock
+        return render(
+            request,
+            'product/list.html',
+            {
+             'productos': productos
+             }
         )
 
-        return redirect(
-            'product_detail',
-            product.id
+class ProductCreate(View):
+    def get(self, request):
+        form = ProductForm()
+
+        return render(
+            request,
+            'product/create.html',
+            {
+             'form': form,
+            }
         )
     
-    categorias = repo.get_all_categories()
-    return render(
-        request,
-        'product/update.html',
-        {'product': product,
-         'categories': categorias}
-    )
+    def post(self, request):
+        productRepo = ProductosRepository()
+        categoryRepo = CategoriasRepository()
+        data = request.POST
+
+        name = data.get('name')
+        description = data.get('description')
+        price = data.get('price')
+        categoryId = data.get('category')
+        category = categoryRepo.get_by_id(id=categoryId)
+        stock = data.get('stock')
+
+        newProduct = productRepo.create(
+            nombre=name,
+            precio=price,
+            cantidad=stock,
+            categoria=category,
+            descripcion=description,
+        )
+        newProductId = newProduct.id
+        return redirect('product_detail', newProductId)
+
+class ProductDetail(View):
+    def get(self, request, id):
+        repo = ProductosRepository()
+        producto = repo.get_by_id(id=id)
+        try:
+            imagen = ProductImage.objects.get(product=producto)
+        except:
+            imagen = None
+
+        return render(
+            request,
+            'product/detail.html',
+            {
+                'producto': producto,
+                'imagen': imagen,
+            }
+        )
+
+class ProductDelete(View):
+    def get(self, request, id):
+        producto = repo.get_by_id(id=id)
+        repo.delete(producto=producto)
+        return redirect('product_list')
+
+class ProductUpdate(View):
+    def get(self, request, id):
+        form = ProductForm()
+        productRepo = ProductosRepository()
+        categoryRepo = CategoriasRepository()
+
+        producto = productRepo.get_by_id(id)
+        categorias = categoryRepo.get_all()
+
+        return render(
+            request,
+            'product/update.html',
+            {
+                'product': producto,
+                'categories': categorias,
+            }
+        )
+    
+    def post(self, request, id):
+        productRepo = ProductosRepository()
+        categoryRepo = CategoriasRepository()
+        producto = productRepo.get_by_id(id)
+        data = request.POST
+
+        name = data.get('name')
+        description = data.get('description')
+        price = data.get('price')
+        categoryId = data.get('category')
+        category = categoryRepo.get_by_id(id=categoryId)
+        stock = data.get('stock')
+
+        productRepo.update(
+            producto = producto,
+            nombre=name,
+            precio=price,
+            cantidad=stock,
+            categoria=category,
+            descripcion=description,
+        )
+
+        return redirect('product_detail', producto.id)
+    

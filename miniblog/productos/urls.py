@@ -1,11 +1,11 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from productos.views.productos_view import (
-    product_list,
-    product_create,
-    product_delete,
-    product_detail,
-    product_update,
+    ProductView,
+    ProductCreate,
+    ProductDetail,
+    ProductDelete,
+    ProductUpdate,
     )
 
 from productos.views.categorias_view import(
@@ -37,11 +37,11 @@ from productos.views.product_image_view import(
 )
 
 urlpatterns = [
-    path(route='', view=product_list, name='product_list'),
-    path(route='create/', view=product_create, name='product_create'),
-    path(route='<int:id>/delete/', view=product_delete, name='product_delete'),
-    path(route='<int:id>/update/', view=product_update, name='product_update'),
-    path(route='<int:id>/detail/', view=product_detail, name='product_detail'),
+    path(route='', view=ProductView.as_view(), name='product_list'),
+    path(route='create/', view=login_required(ProductCreate.as_view(), login_url='login'), name='product_create'),
+    path(route='<int:id>/detail/', view=ProductDetail.as_view(), name='product_detail'),
+    path(route='<int:id>/delete/', view=login_required(ProductDelete.as_view(), login_url='login'), name='product_delete'),
+    path(route='<int:id>/update/', view=login_required(ProductUpdate.as_view(), login_url='login'), name='product_update'),
 
     path(route='category/', view=category_list, name='category_list'),
     path(route='category/create', view=category_create, name='category_create'),
@@ -55,7 +55,7 @@ urlpatterns = [
     path(route='supplier/<int:id>/update', view=supplier_update, name='supplier_update'),
     path(route='supplier/<int:id>/detail', view=supplier_details, name='supplier_detail'),
 
-    path(route='reviews/', view=(ProductReviewView.as_view()), name='review_list'),
+    path(route='reviews/', view=ProductReviewView.as_view(), name='review_list'),
     path(route='reviews/create', view=login_required(ProductReviewCreate.as_view(), login_url='login'), name='review_create'),
     path(route='reviews/<int:id>/detail', view=ProductReviewDetail.as_view(), name='review_detail'),
     path(route='reviews/<int:id>/delete', view=login_required(ProductReviewDelete.as_view(), login_url='login'), name='review_delete'),

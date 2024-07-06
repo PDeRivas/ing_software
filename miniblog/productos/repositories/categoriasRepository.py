@@ -9,19 +9,20 @@ from productos.models import (
 )
 
 class CategoriasRepository:
-    def get_all() -> List[Category]:
+    def get_all(self) -> List[Category]:
         return Category.objects.all()
     
-    def create(name:str) -> Category.objects:
+    def create(self, name:str) -> Category.objects:
         return Category.objects.create(name = name)
     
-    def delete(category: Category):
+    def delete(self, category: Category):
         category.delete()
 
-    def get_by_id(id: int) -> Category.objects:
+    def get_by_id(self, id: int) -> Category.objects:
         return Category.objects.get(id=id)
     
-    def update(category: Category,
+    def update(self,
+               category: Category,
                name: str,) -> Category.objects:
         category.name = name
         category.save()
