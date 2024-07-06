@@ -7,8 +7,6 @@ from productos.forms import ProductForm
 from productos.repositories.productosRepository import ProductosRepository
 from productos.repositories.categoriasRepository import CategoriasRepository
 
-repo = ProductosRepository()
-
 class ProductView(View):
     def get(self, request):
         repo = ProductosRepository()
@@ -18,8 +16,8 @@ class ProductView(View):
             request,
             'product/list.html',
             {
-             'productos': productos
-             }
+             'products': productos
+            }
         )
 
 class ProductCreate(View):
@@ -69,13 +67,14 @@ class ProductDetail(View):
             request,
             'product/detail.html',
             {
-                'producto': producto,
-                'imagen': imagen,
+                'product': producto,
+                'image': imagen,
             }
         )
 
 class ProductDelete(View):
     def get(self, request, id):
+        repo = ProductosRepository()
         producto = repo.get_by_id(id=id)
         repo.delete(producto=producto)
         return redirect('product_list')
@@ -120,5 +119,4 @@ class ProductUpdate(View):
             descripcion=description,
         )
 
-        return redirect('product_detail', producto.id)
-    
+        return redirect('product_detail', id)

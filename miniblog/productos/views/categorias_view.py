@@ -1,67 +1,79 @@
+from django.views import View
 from django.shortcuts import render, redirect
 
 from productos.repositories.categoriasRepository import CategoriasRepository
 from django.contrib.auth.decorators import login_required
 
-repo = CategoriasRepository
+repo = CategoriasRepository()
 
-def category_list(request):
-    categorias = repo.get_all()
-    return render(
-        request,
-        'categories/list.html',
-        {
-            'categories': categorias
-        },
-    )
+class CategoryView(View):
+    def get(self, request):
+        repo = CategoriasRepository()
+        categorias = repo.get_all()
 
-@login_required(login_url='login')
-def category_create(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        repo.create(name = name)
+        return render(
+            request,
+            'category/list.html',
+            {
+                'categories': categorias,
+            }
+        )
 
-        return redirect(
-            'category_list'
+class CategoryCreate(View):
+    def get(self, request):
+        return render(
+            request,
+            'category/create.html'
         )
     
-    return render(
-        request,
-        'categories/create.html',
-    )
-
-@login_required(login_url='login')
-def category_delete(request, id:int):
-    categoria = repo.get_by_id(id=id)
-    repo.delete(categoria)
-    return redirect(category_list)
-
-@login_required(login_url='login')
-def category_update(request, id:int):
-    categoria = repo.get_by_id(id=id)
-    if request.method == "POST":
+    def post(self, request):
+        repo = CategoriasRepository()
         name = request.POST.get('name')
-        repo.update(categoria, name)
-        return redirect(
-            category_details,
-            categoria.id
+        newCategory = repo.create(nombre=name)
+
+        newCategoryId = newCategory.id
+
+        return redirect('category_detail', newCategoryId)
+
+class CategoryDetail(View):
+    def get(self, request, id):
+        repo = CategoriasRepository()
+        categoria = repo.get_by_id(id=id)
+
+        return render(
+            request,
+            'category/detail.html',
+            {
+                'category': categoria,
+            }
+        )
+
+class CategoryDelete(View):
+    def get(self, request, id):
+        repo = CategoriasRepository()
+        categoria = repo.get_by_id(id=id)
+        repo.delete(categoria=categoria)
+        return redirect('category_list')
+
+class CategoryUpdate(View):
+    def get(self, request, id):
+        repo = CategoriasRepository()
+        categoria = repo.get_by_id(id)
+
+        return render(
+            request,
+            'category/update.html',
+            {
+                'category': categoria,
+            }
         )
     
-    return render(
-        request,
-        'categories/update.html',
-        {
-            'category': categoria,
-        }
-    )
+    def post(self, request, id):
+        repo = CategoriasRepository()
 
-def category_details(request, id:int):
-    categoria = repo.get_by_id(id=id)
+        categoria = repo.get_by_id(id)
+        name = request.POST.get('name')
+        repo.update(categoria=categoria,
+                    nombre=name)
 
-    return render(
-        request,
-        'categories/detail.html',
-        {
-            'category': categoria,
-        }
-    )
+        return redirect('category_detail', id)

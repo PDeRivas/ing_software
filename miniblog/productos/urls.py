@@ -9,11 +9,11 @@ from productos.views.productos_view import (
     )
 
 from productos.views.categorias_view import(
-    category_list,
-    category_create,
-    category_delete,
-    category_update,
-    category_details,
+    CategoryView,
+    CategoryCreate,
+    CategoryDetail,
+    CategoryDelete,
+    CategoryUpdate,
 )
 
 from productos.views.supplier_view import(
@@ -43,11 +43,11 @@ urlpatterns = [
     path(route='<int:id>/delete/', view=login_required(ProductDelete.as_view(), login_url='login'), name='product_delete'),
     path(route='<int:id>/update/', view=login_required(ProductUpdate.as_view(), login_url='login'), name='product_update'),
 
-    path(route='category/', view=category_list, name='category_list'),
-    path(route='category/create', view=category_create, name='category_create'),
-    path(route='category/<int:id>/delete', view=category_delete, name='category_delete'),
-    path(route='category/<int:id>/update', view=category_update, name='category_update'),
-    path(route='category/<int:id>/detail', view=category_details, name='category_detail'),
+    path(route='category/', view=CategoryView.as_view(), name='category_list'),
+    path(route='category/create', view=login_required(CategoryCreate.as_view(), login_url='login'), name='category_create'),
+    path(route='category/<int:id>/detail', view=CategoryDetail.as_view(), name='category_detail'),
+    path(route='category/<int:id>/delete', view=login_required(CategoryDelete.as_view(), login_url='login'), name='category_delete'),
+    path(route='category/<int:id>/update', view=login_required(CategoryUpdate.as_view(), login_url='login'), name='category_update'),
 
     path(route='supplier/', view=supplier_list, name='supplier_list'),
     path(route='supplier/create', view=supplier_create, name='supplier_create'),

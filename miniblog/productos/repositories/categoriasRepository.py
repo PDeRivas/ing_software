@@ -12,17 +12,17 @@ class CategoriasRepository:
     def get_all(self) -> List[Category]:
         return Category.objects.all()
     
-    def create(self, name:str) -> Category.objects:
-        return Category.objects.create(name = name)
+    def create(self, nombre:str) -> Category.objects:
+        return Category.objects.create(name = nombre)
     
-    def delete(self, category: Category):
-        category.delete()
+    def delete(self, categoria: Category):
+        categoria.delete()
 
     def get_by_id(self, id: int) -> Category.objects:
         return Category.objects.get(id=id)
     
     def update(self,
-               category: Category,
-               name: str,) -> Category.objects:
-        category.name = name
-        category.save()
+               categoria: Category,
+               nombre: str,) -> Category.objects:
+        categoria.name = nombre
+        categoria.save()
