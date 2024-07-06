@@ -21,10 +21,13 @@ class CategoryView(View):
 
 class CategoryCreate(View):
     def get(self, request):
-        return render(
-            request,
-            'category/create.html'
-        )
+        if request.user.is_staff:
+            return render(
+                request,
+                'category/create.html'
+            )
+        else:
+            return redirect('category_list')
     
     def post(self, request):
         repo = CategoriasRepository()
@@ -48,30 +51,37 @@ class CategoryDetail(View):
 
 class CategoryDelete(View):
     def get(self, request, id):
-        repo = CategoriasRepository()
-        categoria = repo.get_by_id(id=id)
-        repo.delete(categoria=categoria)
+        if request.user.is_staff:
+            repo = CategoriasRepository()
+            categoria = repo.get_by_id(id=id)
+            repo.delete(categoria=categoria)
         return redirect('category_list')
 
 class CategoryUpdate(View):
     def get(self, request, id):
-        repo = CategoriasRepository()
-        categoria = repo.get_by_id(id)
+        if request.user.is_staff:
+            repo = CategoriasRepository()
+            categoria = repo.get_by_id(id)
 
-        return render(
-            request,
-            'category/update.html',
-            {
-                'category': categoria,
-            }
-        )
+            return render(
+                request,
+                'category/update.html',
+                {
+                    'category': categoria,
+                }
+            )
+        else:
+            return redirect('category_list')
     
     def post(self, request, id):
-        repo = CategoriasRepository()
+        if request.user.is_staff:
+            repo = CategoriasRepository()
 
-        categoria = repo.get_by_id(id)
-        name = request.POST.get('name')
-        repo.update(categoria=categoria,
-                    nombre=name)
+            categoria = repo.get_by_id(id)
+            name = request.POST.get('name')
+            repo.update(categoria=categoria,
+                        nombre=name)
 
-        return redirect('category_detail', id)
+            return redirect('category_detail', id)
+        else:
+            return redirect('category_list')

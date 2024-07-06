@@ -22,37 +22,43 @@ class ProductView(View):
 
 class ProductCreate(View):
     def get(self, request):
-        form = ProductForm()
+        if request.user.is_staff:
+            form = ProductForm()
 
-        return render(
-            request,
-            'product/create.html',
-            {
-             'form': form,
-            }
-        )
+            return render(
+                request,
+                'product/create.html',
+                {
+                'form': form,
+                }
+            )
+        else:
+            return redirect('product_list')
     
     def post(self, request):
-        productRepo = ProductosRepository()
-        categoryRepo = CategoriasRepository()
-        data = request.POST
+        if request.user.is_staff:
+            productRepo = ProductosRepository()
+            categoryRepo = CategoriasRepository()
+            data = request.POST
 
-        name = data.get('name')
-        description = data.get('description')
-        price = data.get('price')
-        categoryId = data.get('category')
-        category = categoryRepo.get_by_id(id=categoryId)
-        stock = data.get('stock')
+            name = data.get('name')
+            description = data.get('description')
+            price = data.get('price')
+            categoryId = data.get('category')
+            category = categoryRepo.get_by_id(id=categoryId)
+            stock = data.get('stock')
 
-        newProduct = productRepo.create(
-            nombre=name,
-            precio=price,
-            cantidad=stock,
-            categoria=category,
-            descripcion=description,
-        )
-        
-        return redirect('product_detail', newProduct.id)
+            newProduct = productRepo.create(
+                nombre=name,
+                precio=price,
+                cantidad=stock,
+                categoria=category,
+                descripcion=description,
+            )
+            
+            return redirect('product_detail', newProduct.id)
+        else:
+            return redirect('product_list')
 
 class ProductDetail(View):
     def get(self, request, id):
@@ -74,49 +80,55 @@ class ProductDetail(View):
 
 class ProductDelete(View):
     def get(self, request, id):
-        repo = ProductosRepository()
-        producto = repo.get_by_id(id=id)
-        repo.delete(producto=producto)
+        if request.user.is_staff:
+            repo = ProductosRepository()
+            producto = repo.get_by_id(id=id)
+            repo.delete(producto=producto)
         return redirect('product_list')
 
 class ProductUpdate(View):
     def get(self, request, id):
-        form = ProductForm()
-        productRepo = ProductosRepository()
-        categoryRepo = CategoriasRepository()
+        if request.user.is_staff:
+            productRepo = ProductosRepository()
+            categoryRepo = CategoriasRepository()
 
-        producto = productRepo.get_by_id(id)
-        categorias = categoryRepo.get_all()
+            producto = productRepo.get_by_id(id)
+            categorias = categoryRepo.get_all()
 
-        return render(
-            request,
-            'product/update.html',
-            {
-                'product': producto,
-                'categories': categorias,
-            }
-        )
+            return render(
+                request,
+                'product/update.html',
+                {
+                    'product': producto,
+                    'categories': categorias,
+                }
+            )
+        else:
+            return redirect('product_list')
     
     def post(self, request, id):
-        productRepo = ProductosRepository()
-        categoryRepo = CategoriasRepository()
-        producto = productRepo.get_by_id(id)
-        data = request.POST
+        if request.user.is_staff:
+            productRepo = ProductosRepository()
+            categoryRepo = CategoriasRepository()
+            producto = productRepo.get_by_id(id)
+            data = request.POST
 
-        name = data.get('name')
-        description = data.get('description')
-        price = data.get('price')
-        categoryId = data.get('category')
-        category = categoryRepo.get_by_id(id=categoryId)
-        stock = data.get('stock')
+            name = data.get('name')
+            description = data.get('description')
+            price = data.get('price')
+            categoryId = data.get('category')
+            category = categoryRepo.get_by_id(id=categoryId)
+            stock = data.get('stock')
 
-        productRepo.update(
-            producto = producto,
-            nombre=name,
-            precio=price,
-            cantidad=stock,
-            categoria=category,
-            descripcion=description,
-        )
+            productRepo.update(
+                producto = producto,
+                nombre=name,
+                precio=price,
+                cantidad=stock,
+                categoria=category,
+                descripcion=description,
+            )
 
-        return redirect('product_detail', id)
+            return redirect('product_detail', id)
+        else:
+            return redirect('product_list')

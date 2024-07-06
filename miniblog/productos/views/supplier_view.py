@@ -7,104 +7,103 @@ repo = SupplierRepository
 
 class SupplierView(View):
     def get(self, request):
-        repo = SupplierRepository()
-        proveedores = repo.get_all()
-        return render(
-            request,
-            'supplier/list.html',
-            {
-                'suppliers': proveedores
-            },
-        )
+        if request.user.is_staff:
+            repo = SupplierRepository()
+            proveedores = repo.get_all()
+            return render(
+                request,
+                'supplier/list.html',
+                {
+                    'suppliers': proveedores
+                },
+            )
+        else:
+            return redirect('/')
     
 class SupplierCreate(View):
     def get(self, request):
-        return render(
-            request,
-            'supplier/create.html'
-        )
+        if request.user.is_staff:
+            return render(
+                request,
+                'supplier/create.html'
+            )
+        else:
+            return redirect('/')
     
     def post(self, request):
-        repo = SupplierRepository()
-        data = request.POST
+        if request.user.is_staff:
+            repo = SupplierRepository()
+            data = request.POST
 
-        name = data.get('name')
-        address = data.get('address')
-        phone =  data.get('phone')
+            name = data.get('name')
+            address = data.get('address')
+            phone =  data.get('phone')
 
-        newSupplier = repo.create(nombre = name,
-                                  direccion = address,
-                                  telefono = phone)
+            newSupplier = repo.create(nombre = name,
+                                    direccion = address,
+                                    telefono = phone)
 
-        return redirect('supplier_detail', newSupplier.id)
+            return redirect('supplier_detail', newSupplier.id)
+        else:
+            return redirect('/')
 
 class SupplierDetail(View):
     def get(self, request, id):
-        repo = SupplierRepository()
-        proveedor = repo.get_by_id(id)
+        if request.user.is_staff:
+            repo = SupplierRepository()
+            proveedor = repo.get_by_id(id)
 
-        return render(
-            request,
-            'supplier/detail.html',
-            {
-                'supplier': proveedor,
-            }
-        )
+            return render(
+                request,
+                'supplier/detail.html',
+                {
+                    'supplier': proveedor,
+                }
+            )
+        else:
+            return redirect('/')
 
 class SupplierDelete(View):
     def get(self, request, id):
-        repo = SupplierRepository()
-        proveedor = repo.get_by_id(id=id)
-        repo.delete(proveedor)
-        return redirect('supplier_list')
+        if request.user.is_staff:
+            repo = SupplierRepository()
+            proveedor = repo.get_by_id(id=id)
+            repo.delete(proveedor)
+            return redirect('supplier_list')
+        else:
+            return redirect('/')
     
 class SupplierUpdate(View):
     def get(self, request, id):
-        repo = SupplierRepository()
-        proveedor = repo.get_by_id(id)
+        if request.user.is_staff:
+            repo = SupplierRepository()
+            proveedor = repo.get_by_id(id)
 
-        return render(
-            request,
-            'supplier/update.html',
-            {
-                'supplier': proveedor,
-            }
-        )
+            return render(
+                request,
+                'supplier/update.html',
+                {
+                    'supplier': proveedor,
+                }
+            )
+        else:
+            return redirect('/')
     
     def post(self, request, id):
-        repo = SupplierRepository()
-        proveedor = repo.get_by_id(id)
+        if request.user.is_staff:
+            repo = SupplierRepository()
+            proveedor = repo.get_by_id(id)
 
-        data = request.POST
-        name = data.get('name')
-        address = data.get('address')
-        phone =  data.get('phone')
+            data = request.POST
+            name = data.get('name')
+            address = data.get('address')
+            phone =  data.get('phone')
 
-        repo.update(proveedor = proveedor,
-                    nombre = name,
-                    direccion = address,
-                    telefono = phone)
+            repo.update(proveedor = proveedor,
+                        nombre = name,
+                        direccion = address,
+                        telefono = phone)
 
-        return redirect('supplier_detail', id)
-
-def supplier_update(request, id:int):
-    proveedor = repo.get_by_id(id=id)
-    if request.method == "POST":
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        phone =  request.POST.get('phone')
-
-        repo.update(proveedor, name, address, phone)
-        return redirect(
-            'supplier_detail',
-            proveedor.id
-        )
-    
-    return render(
-        request,
-        'supplier/update.html',
-        {
-            'supplier': proveedor,
-        }
-    )
-
+            return redirect('supplier_detail', id)
+        else:
+            return redirect('/')

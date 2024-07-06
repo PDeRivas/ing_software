@@ -1,8 +1,9 @@
 {% extends 'home/base.html' %}
-
 {% block content %}
 
-<a href="{% url 'supplier_create' %}" class="btn btn-primary mb-3">Agregar Proveedor</a>
+<div class="container mt-3">
+    <h2>Proveedores</h2>
+    <a href="{% url 'supplier_create' %}" class="btn btn-primary mb-3">Agregar Proveedor</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -27,5 +28,5 @@
             {% endfor %}
         </tbody>
     </table>
-
+</div>
 {% endblock %}

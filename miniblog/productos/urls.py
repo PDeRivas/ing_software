@@ -38,10 +38,10 @@ from productos.views.product_image_view import(
 
 urlpatterns = [
     path(route='', view=ProductView.as_view(), name='product_list'),
-    path(route='create/', view=login_required(ProductCreate.as_view(), login_url='login'), name='product_create'),
+    path(route='create/', view=ProductCreate.as_view(), name='product_create'),
     path(route='<int:id>/detail/', view=ProductDetail.as_view(), name='product_detail'),
-    path(route='<int:id>/delete/', view=login_required(ProductDelete.as_view(), login_url='login'), name='product_delete'),
-    path(route='<int:id>/update/', view=login_required(ProductUpdate.as_view(), login_url='login'), name='product_update'),
+    path(route='<int:id>/delete/', view=ProductDelete.as_view(), name='product_delete'),
+    path(route='<int:id>/update/', view=ProductUpdate.as_view(), name='product_update'),
 
     path(route='category/', view=CategoryView.as_view(), name='category_list'),
     path(route='category/create', view=login_required(CategoryCreate.as_view(), login_url='login'), name='category_create'),
@@ -58,7 +58,7 @@ urlpatterns = [
     path(route='reviews/', view=ProductReviewView.as_view(), name='review_list'),
     path(route='reviews/create', view=login_required(ProductReviewCreate.as_view(), login_url='login'), name='review_create'),
     path(route='reviews/<int:id>/detail', view=ProductReviewDetail.as_view(), name='review_detail'),
-    path(route='reviews/<int:id>/delete', view=login_required(ProductReviewDelete.as_view(), login_url='login'), name='review_delete'),
+    path(route='reviews/<int:id>/delete', view=ProductReviewDelete.as_view(), name='review_delete'),
     path(route='reviews/<int:id>/update', view=login_required(ProductReviewUpdate.as_view(), login_url='login'), name='review_update'),
 
     path(route='images', view=ProductImageView.as_view(), name='image_list')

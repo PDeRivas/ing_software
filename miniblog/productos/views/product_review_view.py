@@ -9,9 +9,6 @@ class ProductReviewView(View):
         repo = ReviewRepository()
         reviews = repo.get_all()
 
-        if request.user.is_authenticated and not request.user.is_staff:
-            reviews = reviews.filter(author=request.user)
-
         return render(
             request,
             'product_review/list.html',
@@ -49,27 +46,32 @@ class ProductReviewDetail(View):
 
 class ProductReviewUpdate(View):
     def get(self, request, id):
-        repo = ReviewRepository()
-        review = repo.get_by_id(id=id)
-        return render(
-            request,
-            'product_review/update.html',
-            {'review': review},
-        )
+        if request.user.is_authenticated:
+            repo = ReviewRepository()
+            review = repo.get_by_id(id=id)
+            return render(
+                request,
+                'product_review/update.html',
+                {'review': review},
+            )
+        else:
+            return redirect('review_list')
 
     def post(self, request, id):
-        repo = ReviewRepository()
-        review = repo.get_by_id(id)
-        opinion = request.POST.get('opinion')
-        rating =  request.POST.get('rating')
-        review.text = opinion
-        review.rating = rating
-        review.save()
+        if request.user.is_authenticated:
+            repo = ReviewRepository()
+            review = repo.get_by_id(id)
+            opinion = request.POST.get('opinion')
+            rating =  request.POST.get('rating')
+            review.text = opinion
+            review.rating = rating
+            review.save()
         return redirect('review_list')
 
 class ProductReviewDelete(View):
     def get(self, request, id):
-        repo = ReviewRepository()
-        review = repo.get_by_id(id=id)
-        repo.delete(review=review)
+        if request.user.is_authenticated:
+            repo = ReviewRepository()
+            review = repo.get_by_id(id=id)
+            repo.delete(review=review)
         return redirect('review_list')
