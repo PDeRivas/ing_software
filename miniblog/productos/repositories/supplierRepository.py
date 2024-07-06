@@ -8,28 +8,32 @@ from productos.models import (
 )
 
 class SupplierRepository:
-    def get_all() -> List[Supplier]:
+    def get_all(self) -> List[Supplier]:
         return Supplier.objects.all()
     
-    def create(name: str,
-               address: str,
-               phone: int,) -> Supplier.objects:
-        return Supplier.objects.create(name = name,
-                                       address = address,
-                                       phone = phone)
+    def create(self,
+            nombre: str,
+            direccion: str,
+            telefono: int,) -> Supplier.objects:
+        return Supplier.objects.create(name = nombre,
+                                       address = direccion,
+                                       phone = telefono)
     
-    def delete(supplier: Supplier):
+    def delete(self,
+               supplier: Supplier):
         supplier.delete()
 
-    def get_by_id(id: int) -> Supplier.objects:
+    def get_by_id(self,
+                  id: int) -> Supplier.objects:
         return Supplier.objects.get(id=id)
     
-    def update(supplier: Supplier,
-               name: str,
-               address: str,
-               phone: int,) -> Supplier.objects:
-        supplier.name = name
-        supplier.address = address
-        supplier.phone = phone
+    def update(self,
+               proveedor: Supplier,
+               nombre: str,
+               direccion: str,
+               telefono: int,) -> Supplier.objects:
+        proveedor.name = nombre
+        proveedor.address = direccion
+        proveedor.phone = telefono
 
-        supplier.save()
+        proveedor.save()

@@ -31,9 +31,7 @@ class CategoryCreate(View):
         name = request.POST.get('name')
         newCategory = repo.create(nombre=name)
 
-        newCategoryId = newCategory.id
-
-        return redirect('category_detail', newCategoryId)
+        return redirect('category_detail', newCategory.id)
 
 class CategoryDetail(View):
     def get(self, request, id):

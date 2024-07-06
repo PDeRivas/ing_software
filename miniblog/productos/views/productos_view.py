@@ -51,8 +51,8 @@ class ProductCreate(View):
             categoria=category,
             descripcion=description,
         )
-        newProductId = newProduct.id
-        return redirect('product_detail', newProductId)
+        
+        return redirect('product_detail', newProduct.id)
 
 class ProductDetail(View):
     def get(self, request, id):

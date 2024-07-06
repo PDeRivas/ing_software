@@ -17,11 +17,11 @@ from productos.views.categorias_view import(
 )
 
 from productos.views.supplier_view import(
-    supplier_list,
-    supplier_create,
-    supplier_delete,
-    supplier_update,
-    supplier_details,
+    SupplierView,
+    SupplierCreate,
+    SupplierDetail,
+    SupplierDelete,
+    SupplierUpdate,
 )
 
 from productos.views.product_review_view import(
@@ -49,11 +49,11 @@ urlpatterns = [
     path(route='category/<int:id>/delete', view=login_required(CategoryDelete.as_view(), login_url='login'), name='category_delete'),
     path(route='category/<int:id>/update', view=login_required(CategoryUpdate.as_view(), login_url='login'), name='category_update'),
 
-    path(route='supplier/', view=supplier_list, name='supplier_list'),
-    path(route='supplier/create', view=supplier_create, name='supplier_create'),
-    path(route='supplier/<int:id>/delete', view=supplier_delete, name='supplier_delete'),
-    path(route='supplier/<int:id>/update', view=supplier_update, name='supplier_update'),
-    path(route='supplier/<int:id>/detail', view=supplier_details, name='supplier_detail'),
+    path(route='supplier/', view=SupplierView.as_view(), name='supplier_list'),
+    path(route='supplier/create', view=login_required(SupplierCreate.as_view(), login_url=('login')), name='supplier_create'),
+    path(route='supplier/<int:id>/detail', view=SupplierDetail.as_view(), name='supplier_detail'),
+    path(route='supplier/<int:id>/delete', view=login_required(SupplierDelete.as_view(), login_url='login'), name='supplier_delete'),
+    path(route='supplier/<int:id>/update', view=login_required(SupplierUpdate.as_view(), login_url='login'), name='supplier_update'),
 
     path(route='reviews/', view=ProductReviewView.as_view(), name='review_list'),
     path(route='reviews/create', view=login_required(ProductReviewCreate.as_view(), login_url='login'), name='review_create'),
