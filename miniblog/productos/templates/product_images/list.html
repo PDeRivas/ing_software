@@ -1,17 +1,12 @@
 {% extends "home/base.html" %}
 {% block content %}
         {% for image in images %}
-        <div class="card">
-            <div class="card-header">
-                {{ image.product }}
-            </div>
-
-            <div class="card-body text-center">
-                <img src="{{image.image.url}}" class="img-fluid" alt="Imagen">
-            </div>
-            <div class="card-footer">
-                {{ image.description }}
-            </div>
-        </div>
+            <img src="https://ingsoftwareitec.s3.us-east-2.amazonaws.com/imagen_producto_{{image.id}}" alt="xd">
         {% endfor %}
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Guardar Imagen</button>
+        </form>
 {% endblock %}

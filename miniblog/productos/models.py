@@ -84,6 +84,7 @@ class ProductImage(models.Model):
         related_name='images'
     )
     image = models.ImageField(upload_to='product_images/', null=True)
+    image_route = models.CharField(max_length=200, default=None, null=True)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):

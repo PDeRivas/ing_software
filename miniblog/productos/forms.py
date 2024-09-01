@@ -34,4 +34,5 @@ class ProductImageForm(forms.ModelForm):
             'product',
             'image',
             'description',
+            'image_route',
         ]
