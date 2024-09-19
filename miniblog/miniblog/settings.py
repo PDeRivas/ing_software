@@ -19,10 +19,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    "productos",
-    'home',
 ]
+
+SELF_APPS = [
+    'api_v1',
+    'productos',
+    'home',
+    'users'
+]
+
+EXTERNAL_APPS = [
+    'rest_framework',
+    'django_filters'
+]
+
+INSTALLED_APPS = INSTALLED_APPS + SELF_APPS + EXTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,3 +123,8 @@ sentry_sdk.init(
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'api_v1.paginations.MiPaginador',
+    'PAGE_SIZE': 25
+}
