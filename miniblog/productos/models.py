@@ -21,7 +21,8 @@ class Productos(models.Model):
         blank=True
         )
     stock = models.IntegerField(default = 0)
-
+    active = models.BooleanField(default=True)
+    
     @admin.display(description = 'Rango de Precios')
     def get_price_range(self):
         if self.price > 90000:
