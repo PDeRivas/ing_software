@@ -80,6 +80,7 @@ def test_detail_products(client: APIClient):
     assert response.json() == expected_result
 
 @pytest.mark.django_db
+
 def test_delete_products(client: APIClient):
 
     product_1 = ProductFactory()
