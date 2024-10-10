@@ -1,19 +1,22 @@
 {% extends "home/base.html" %}
 {% block content %}
+
+{% load i18n %}
+
 <div class="container mt-3">
-    <h2>Lista de Productos</h2>
+    <h2>{% trans "Lista de Productos" %}</h2>
     {% if user.is_staff %}
-        <a href="{% url 'product_create' %}" class="btn btn-primary mb-3">Crear Producto</a>
+        <a href="{% url 'product_create' %}" class="btn btn-primary mb-3">{% trans "Crear Producto" %}</a>
     {% endif %}
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Categoría</th>
-                <th>Stock</th>
-                <th>Acciones</th>
+                <th>{% trans "Nombre" %}</th>
+                <th>{% trans "Descripción" %}</th>
+                <th>{% trans "Precio" %}</th>
+                <th>{% trans "Categoría" %}</th>
+                <th>{% trans "Stock" %}</th>
+                <th>{% trans "Acciones" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,10 +28,10 @@
                 <td>{{ product.category.name }}</td>
                 <td>{{ product.stock }}</td>
                 <td>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-info btn-sm">Detalles</a>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-info btn-sm">{% trans "Detalles" %}</a>
                     {% if user.is_staff %}
-                    <a href="{% url 'product_update' product.id %}" class="btn btn-success btn-sm">Editar</a>
-                    <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a href="{% url 'product_update' product.id %}" class="btn btn-success btn-sm">{% trans "Editar"%}</a>
+                    <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">{% trans "Eliminar"%}</a>
                     {% endif %}
                 </td>
             </tr>

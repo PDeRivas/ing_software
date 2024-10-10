@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 11:07+1100\n"
+"POT-Creation-Date: 2024-10-10 18:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,32 +18,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: miniblog/settings.py:98
-msgid "Spanish"
+#: .\home\templates\home\index.html:11
+msgid "Bienvenido"
+msgstr "Welcome"
+
+#: .\miniblog\settings.py:97
+msgid "Español"
 msgstr ""
 
-#: miniblog/settings.py:99
+#: .\miniblog\settings.py:98
 msgid "English"
 msgstr ""
 
-#: productos/models.py:13
+#: .\productos\models.py:13
+msgid "name"
+msgstr ""
+
+#: .\productos\models.py:14
+#, fuzzy
+#| msgid "Descripcion"
+msgid "description"
+msgstr "Description"
+
+#: .\productos\models.py:17
+msgid "price"
+msgstr ""
+
+#: .\productos\models.py:23
+#, fuzzy
+#| msgid "Categoria"
+msgid "category"
+msgstr "Category"
+
+#: .\productos\models.py:25
+msgid "stock"
+msgstr ""
+
+#: .\productos\models.py:26
+msgid "active"
+msgstr ""
+
+#: .\productos\templates\product\list.html:7
+msgid "Lista de Productos"
+msgstr "Product List"
+
+#: .\productos\templates\product\list.html:9
+msgid "Crear Producto"
+msgstr "Create Product"
+
+#: .\productos\templates\product\list.html:14
 msgid "Nombre"
 msgstr "Name"
 
-#: productos/models.py:14
-msgid "Descripcion"
+#: .\productos\templates\product\list.html:15
+msgid "Descripción"
 msgstr "Description"
 
-#: productos/models.py:17
-msgid "Price"
-msgstr ""
+#: .\productos\templates\product\list.html:16
+msgid "Precio"
+msgstr "Price"
 
-#: productos/models.py:23
-msgid "Categoria"
+#: .\productos\templates\product\list.html:17
+msgid "Categoría"
 msgstr "Category"
 
-#~ msgid "Precio"
-#~ msgstr "Price"
+#: .\productos\templates\product\list.html:18
+msgid "Stock"
+msgstr ""
 
-#~ msgid "Bienvenido"
-#~ msgstr "Welcome"
+#: .\productos\templates\product\list.html:19
+msgid "Acciones"
+msgstr "Actions"
+
+#: .\productos\templates\product\list.html:31
+msgid "Detalles"
+msgstr "Detail"
+
+#: .\productos\templates\product\list.html:33
+msgid "Editar"
+msgstr "Edit"
+
+#: .\productos\templates\product\list.html:34
+msgid "Eliminar"
+msgstr "Delete"

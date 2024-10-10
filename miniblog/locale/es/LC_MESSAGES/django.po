@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 11:13+1100\n"
+"POT-Creation-Date: 2024-10-10 18:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,31 +19,91 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: miniblog/settings.py:98
-msgid "Spanish"
+#: .\home\templates\home\index.html:11
+msgid "Bienvenido"
+msgstr "Bienvenido"
+
+#: .\miniblog\settings.py:97
+msgid "Español"
 msgstr ""
 
-#: miniblog/settings.py:99
+#: .\miniblog\settings.py:98
 msgid "English"
 msgstr ""
 
-#: productos/models.py:13
-msgid "Nombre"
-msgstr ""
+#: .\productos\models.py:13
+msgid "name"
+msgstr "Nombre"
 
-#: productos/models.py:14
-#, fuzzy
-#| msgid "Description"
-msgid "Descripcion"
+#: .\productos\models.py:14
+msgid "description"
 msgstr "Descripcion"
 
-#: productos/models.py:17
-msgid "Price"
+#: .\productos\models.py:17
+msgid "price"
 msgstr "Precio"
 
-#: productos/models.py:23
-msgid "Categoria"
+#: .\productos\models.py:23
+msgid "category"
+msgstr "Categoria"
+
+#: .\productos\models.py:25
+msgid "stock"
+msgstr "Cantidad"
+
+#: .\productos\models.py:26
+msgid "active"
+msgstr "Activo"
+
+#: .\productos\templates\product\list.html:7
+msgid "Lista de Productos"
+msgstr "Lista de Productos"
+
+#: .\productos\templates\product\list.html:9
+msgid "Crear Producto"
+msgstr "Crear Producto"
+
+#: .\productos\templates\product\list.html:14
+msgid "Nombre"
+msgstr "Nombre"
+
+#: .\productos\templates\product\list.html:15
+#, fuzzy
+#| msgid "description"
+msgid "Descripción"
+msgstr "Descripcion"
+
+#: .\productos\templates\product\list.html:16
+msgid "Precio"
+msgstr "Precio"
+
+#: .\productos\templates\product\list.html:17
+#, fuzzy
+#| msgid "category"
+msgid "Categoría"
+msgstr "Categoria"
+
+#: .\productos\templates\product\list.html:18
+#, fuzzy
+#| msgid "stock"
+msgid "Stock"
+msgstr "Cantidad"
+
+#: .\productos\templates\product\list.html:19
+msgid "Acciones"
 msgstr ""
+
+#: .\productos\templates\product\list.html:31
+msgid "Detalles"
+msgstr "Detalles"
+
+#: .\productos\templates\product\list.html:33
+msgid "Editar"
+msgstr "Editar"
+
+#: .\productos\templates\product\list.html:34
+msgid "Eliminar"
+msgstr "Eliminar"
 
 #~ msgid "Name"
 #~ msgstr "Nombre"

@@ -2,13 +2,25 @@ from django.views import View
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
+from users.models import Profile
 from productos.models import ProductImage
 from productos.forms import ProductForm
 from productos.repositories.productosRepository import ProductosRepository
 from productos.repositories.categoriasRepository import CategoriasRepository
 
+from django.utils.translation import (
+    activate,
+    get_language,
+    gettext_lazy as _,
+    deactivate
+)
+
 class ProductView(View):
     def get(self, request):
+        if not request.user.is_anonymous :
+            profile = Profile.objects.get(user = request.user)
+            lang = profile.language
+            activate(lang)
         repo = ProductosRepository()
         productos = repo.get_all()
 

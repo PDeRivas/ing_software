@@ -1,6 +1,7 @@
 from pathlib import Path
 import sentry_sdk
 import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,6 +62,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 "miniblog.context_processors.all_names_product",
                 "miniblog.context_processors.all_names_category",
+                "miniblog.context_processors.profile",
             ],
         },
     },
@@ -90,12 +92,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-from django.utils.translation import gettext_lazy as _
-
 LANGUAGE_CODE = 'en'
 
 LANGUAGES = (
-    ('es', _('Spanish')),
+    ('es', _('Español')),
     ('en', _('English')),
 )
 

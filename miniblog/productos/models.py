@@ -10,20 +10,20 @@ class Category(models.Model):
         return self.name
     
 class Productos(models.Model):
-    name = models.CharField(max_length = 50, verbose_name = _('Nombre'))
-    description = models.TextField(null = True, verbose_name = _('Descripcion'))
+    name = models.CharField(max_length = 50, verbose_name = _('name'))
+    description = models.TextField(null = True, verbose_name = _('description'))
     price = models.DecimalField(max_digits = 12,
                                 decimal_places = 2,
-                                verbose_name = _('Price'))
+                                verbose_name = _('price'))
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name = _('Categoria')
+        verbose_name = _('category')
         )
-    stock = models.IntegerField(default = 0)
-    active = models.BooleanField(default=True)
+    stock = models.IntegerField(default = 0, verbose_name=_('stock'))
+    active = models.BooleanField(default=True, verbose_name=_('active'))
     
     @admin.display(description = 'Rango de Precios')
     def get_price_range(self):

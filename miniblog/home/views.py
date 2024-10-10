@@ -6,6 +6,7 @@ from django.contrib.auth import (
     login,
     logout)
 from users.forms import UserRegisterForm
+from users.models import Profile
 
 class LoginView(View):
 
@@ -66,3 +67,18 @@ def index_view(request):
         request,
         'home/index.html'
     )
+
+class UpdateLang(View):
+    def get(self, request):
+        profile = Profile.objects.get(user = request.user)
+        print(profile)
+        lang = profile.language
+        if lang == 'es':
+            print('hola')
+            profile.language = 'en'
+        if lang == 'en':
+            print('chau')
+            profile.language = 'es'
+        profile.save()
+
+        return redirect(request.META.get('HTTP_REFERER', 'index'))

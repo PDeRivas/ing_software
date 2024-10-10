@@ -2,6 +2,8 @@ from django.core.cache import cache
 
 from productos.models import Productos, Category
 
+from users.models import Profile
+
 def all_names_product(request):
     products = cache.get('products')
     if products == None:
@@ -16,3 +18,8 @@ def all_names_category(request):
     return dict(
         names_category=names
     )
+
+def profile(request):
+    return {
+        'profile': Profile.objects.get(user=request.user)
+    }
